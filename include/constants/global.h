@@ -1,0 +1,8 @@
+#pragma once
+
+#define MAIL_WORDS_COUNT 9
+#define PLAYER_NAME_LENGTH 7
+#define TRAINER_ID_LENGTH 4
+#define POKEMON_NAME_LENGTH 10
+#define NUM_STATS 6
+#define CONTEST_CATEGORIES_COUNT  5
