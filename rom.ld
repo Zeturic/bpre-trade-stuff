@@ -14,4 +14,4 @@ gTradeMail          = 0x02031CCC;
 gEnemyParty         = 0x0202402C;
 gPlayerParty        = 0x02024284;
 
-sIngameTrades       = 0x0826CF8C;
+sIngameTradesPtr    = 0x08053AD4;
