@@ -27,9 +27,9 @@ struct InGameTrade {
     /*0x3B*/ u8 pad_3B;
 };
 
-// extern const struct InGameTrade sIngameTrades[];
-typedef const struct InGameTrade sIngameTradesType[];
-extern const sIngameTradesType * const sIngameTradesPtr;
-#define sIngameTrades (*sIngameTradesPtr)
+// extern const struct InGameTrade sInGameTrades[];
+typedef const struct InGameTrade sInGameTradesType[];
+extern const sInGameTradesType * const sInGameTradesPtr;
+#define sInGameTrades (*sInGameTradesPtr)
 
 void SetInGameTradeMail(struct MailStruct *mail, const struct InGameTrade *trade);
