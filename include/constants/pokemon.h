@@ -3,10 +3,13 @@
 #define MON_DATA_NICKNAME           2
 #define MON_DATA_OT_NAME            7
 #define MON_DATA_HELD_ITEM         12
+#define MON_DATA_MOVE1             13
+#define MON_DATA_PP1               17
 #define MON_DATA_COOL              22
 #define MON_DATA_BEAUTY            23
 #define MON_DATA_CUTE              24
 #define MON_DATA_SMART             33
+#define MON_DATA_POKERUS           34
 #define MON_DATA_MET_LOCATION      35
 #define MON_DATA_HP_IV             39
 #define MON_DATA_ATK_IV            40

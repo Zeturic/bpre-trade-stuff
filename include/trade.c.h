@@ -4,13 +4,10 @@
 
 struct InGameTrade {
     /*0x00*/ u8 nickname[POKEMON_NAME_LENGTH + 1];
-    /*0x0B*/ u8 pad_0B;
+    /*0x0B*/ u8 pokerus;
     /*0x0C*/ u16 species;
     /*0x0E*/ u8 ivs[NUM_STATS];
-    /*0x14*/ u8 abilityNum;
-    /*0x15*/ u8 pad_16;
-    /*0x16*/ u8 pad_17;
-    /*0x17*/ u8 pad_18;
+    /*0x14*/ u16 *moveset;
     /*0x18*/ u32 otId;
     /*0x1C*/ u8 conditions[CONTEST_CATEGORIES_COUNT];
     /*0x21*/ u8 pad_21;
@@ -23,13 +20,17 @@ struct InGameTrade {
     /*0x36*/ u8 otGender;
     /*0x37*/ u8 sheen;
     /*0x38*/ u16 requestedSpecies;
-    /*0x3A*/ u8 pad_3A;
-    /*0x3B*/ u8 pad_3B;
+    /*0x3A*/ u8 level;
+    /*0x3B*/ u8 abilityNum;
 };
+
+#ifndef SKIP_DECLARE_SINGAMETRADES
 
 // extern const struct InGameTrade sInGameTrades[];
 typedef const struct InGameTrade sInGameTradesType[];
 extern const sInGameTradesType * const sInGameTradesPtr;
 #define sInGameTrades (*sInGameTradesPtr)
+
+#endif
 
 void SetInGameTradeMail(struct MailStruct *mail, const struct InGameTrade *trade);

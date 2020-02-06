@@ -8,7 +8,7 @@
 void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
 {
     const struct InGameTrade *inGameTrade = &sInGameTrades[whichInGameTrade];
-    u8 level = GetMonData(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
+    u8 level = inGameTrade->level ? inGameTrade->level : GetMonData(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
 
     struct MailStruct mail;
     u8 metLocation = METLOC_IN_GAME_TRADE;
@@ -33,7 +33,15 @@ void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
     SetMonData(pokemon, MON_DATA_SMART, &inGameTrade->conditions[3]);
     SetMonData(pokemon, MON_DATA_TOUGH, &inGameTrade->conditions[4]);
     SetMonData(pokemon, MON_DATA_SHEEN, &inGameTrade->sheen);
+    SetMonData(pokemon, MON_DATA_POKERUS, &inGameTrade->pokerus);
     SetMonData(pokemon, MON_DATA_MET_LOCATION, &metLocation);
+
+    if (inGameTrade->moveset)
+        for (u32 i = 0; i < MAX_MON_MOVES; ++i)
+        {
+            SetMonData(pokemon, MON_DATA_MOVE1 + i, &inGameTrade->moveset[i]);
+            SetMonData(pokemon, MON_DATA_PP1 + i, &gBattleMoves[inGameTrade->moveset[i]].pp);
+        }
 
     isMail = FALSE;
     if (inGameTrade->heldItem != ITEM_NONE)
