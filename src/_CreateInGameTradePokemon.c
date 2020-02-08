@@ -55,6 +55,9 @@ void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
         SetMonData(pokemon, MON_DATA_PP1 + i, &pp);
     }
 
+    if (inGameTrade->ball)
+        SetMonData(pokemon, MON_DATA_POKEBALL, &inGameTrade->ball);
+
     isMail = FALSE;
     if (inGameTrade->heldItem != ITEM_NONE)
     {

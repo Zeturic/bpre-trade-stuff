@@ -22,8 +22,8 @@ class InGameTrade():
 
         trade.otId = struct.unpack("<I", rom.read(4))[0]
         trade.conditions = arraystring(rom.read(5))
-        trade.ppBonuses = struct.unpack("B", rom.read(1))[0]
-        rom.seek(2, os.SEEK_CUR)
+        trade.ppBonuses, trade.ball = struct.unpack("BB", rom.read(2))
+        rom.seek(1, os.SEEK_CUR)
         trade.personality, trade.heldItem, trade.mailNum = struct.unpack("<IHB", rom.read(7))
         trade.otName = f'_("{encoding.decode(rom.read(11))}")'
         trade.otGender, trade.sheen, trade.requestedSpecies, trade.level = struct.unpack("<BBHB", rom.read(5))
@@ -54,7 +54,8 @@ class InGameTrade():
             f"0x{self.requestedSpecies :X}",
             self.level,
             f"(u16*) 0x{self.moveset :08X}" if self.moveset else "NULL",
-            f"0x{self.ppBonuses :X}"
+            f"0x{self.ppBonuses :X}",
+            self.ball
         )
 
     with open(Path(__file__).parent / "templates/InGameTrade", "r", encoding="UTF-8") as stream:

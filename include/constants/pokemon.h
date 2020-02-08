@@ -12,6 +12,7 @@
 #define MON_DATA_SMART             33
 #define MON_DATA_POKERUS           34
 #define MON_DATA_MET_LOCATION      35
+#define MON_DATA_POKEBALL          38
 #define MON_DATA_HP_IV             39
 #define MON_DATA_ATK_IV            40
 #define MON_DATA_DEF_IV            41

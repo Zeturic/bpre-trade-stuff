@@ -16,4 +16,5 @@
         .level = {},
         .moveset = {},
         .ppBonuses = {},
+        .ball = {},
     }},
