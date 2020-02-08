@@ -13,7 +13,7 @@ SRC_FILES = $(filter-out src/sInGameTrades.c, $(wildcard src/*.c))
 OBJ_FILES = $(SRC_FILES:src/%.c=build/src/%.o)
 MAIN_ASM_INCLUDES = $(wildcard *.s)
 
-CFLAGS = -O2 -mlong-calls -Wall -Wextra -mthumb -mno-thumb-interwork -fno-inline -fno-builtin -std=gnu11 -mabi=apcs-gnu -mcpu=arm7tdmi -march=armv4t -mtune=arm7tdmi -x c -c -I include -I gflib -D NUM_INGAME_TRADES=$(NUM_INGAME_TRADES)
+CFLAGS = -O2 -mlong-calls -Wall -Wextra -mthumb -mno-thumb-interwork -fno-inline -fno-builtin -std=gnu11 -mabi=apcs-gnu -mcpu=arm7tdmi -march=armv4t -mtune=arm7tdmi -x c -c -I include -I gflib -D NUM_INGAME_TRADES=$(NUM_INGAME_TRADES) -D INSERT_INGAME_TRADE_HACK=$(INSERT_INGAME_TRADE_HACK)
 
 LD = $(PREFIX)ld
 LDFLAGS = --relocatable -T rom.ld --defsym sInGameTradesPtr=$(sInGameTradesPtr)
@@ -27,7 +27,7 @@ SCANINC = tools/scaninc/scaninc
 TOOLS = $(PREPROC) $(SCANINC)
 
 ARMIPS ?= armips
-ARMIPS_FLAGS = -sym test.sym -equ NUM_INGAME_TRADES $(NUM_INGAME_TRADES)
+ARMIPS_FLAGS = -sym test.sym -equ NUM_INGAME_TRADES $(NUM_INGAME_TRADES) -equ INSERT_INGAME_TRADE_HACK $(INSERT_INGAME_TRADE_HACK)
 
 PYTHON ?= python3
 

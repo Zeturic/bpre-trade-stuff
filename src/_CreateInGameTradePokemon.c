@@ -5,6 +5,8 @@
 #include "constants/items.h"
 #include "constants/region_map_sections.h"
 
+#if INSERT_INGAME_TRADE_HACK
+
 void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
 {
     const struct InGameTrade *inGameTrade = &sInGameTrades[whichInGameTrade];
@@ -60,3 +62,5 @@ void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
     }
     CalculateMonStats(&gEnemyParty[0]);
 }
+
+#endif
