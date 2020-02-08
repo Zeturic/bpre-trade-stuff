@@ -22,21 +22,16 @@
 // skip over constants in the middle of the function
 
 .org 0x08053CB4
-.area 0x1A, 0xFE
-.endarea
+.fill 0x1A, 0xFE
 
 // -----------------------------------------------------------------------------
 
 SIZEOF_INGAME_TRADE equ 0x3C
 
-.if MOVE_INGAME_TRADE_ABILITYNUM
-
 .org readu32("rom.gba", sInGameTradesPtr & 0x1FFFFFF)
 .area NUM_INGAME_TRADES * SIZEOF_INGAME_TRADE
     .importobj "build/src/sInGameTrades.o"
 .endarea
-
-.endif
 
 // -----------------------------------------------------------------------------
 

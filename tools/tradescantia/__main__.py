@@ -7,22 +7,31 @@ import encoding
 
 class InGameTrade():
     @staticmethod
-    def parse(rom):
+    def parse(rom, *, original_format):
         trade = InGameTrade()
 
         trade.nickname = f'_("{encoding.decode(rom.read(11))}")'
         trade.pokerus, trade.species = struct.unpack("<BH", rom.read(3))
         trade.ivs = arraystring(rom.read(6))
-        trade.abilityNum = struct.unpack("<B", rom.read(1))[0]
-        rom.seek(3, os.SEEK_CUR)
+
+        if original_format:
+            trade.abilityNum = struct.unpack("<B", rom.read(1))[0]
+            rom.seek(3, os.SEEK_CUR)
+        else:
+            trade.moveset = struct.unpack("<I", rom.read(4))[0]
+
         trade.otId = struct.unpack("<I", rom.read(4))[0]
         trade.conditions = arraystring(rom.read(5))
         rom.seek(3, os.SEEK_CUR)
         trade.personality, trade.heldItem, trade.mailNum = struct.unpack("<IHB", rom.read(7))
         trade.otName = f'_("{encoding.decode(rom.read(11))}")'
         trade.otGender, trade.sheen, trade.requestedSpecies, trade.level = struct.unpack("<BBHB", rom.read(5))
-        trade.moveset = 0
-        rom.seek(1, os.SEEK_CUR)
+
+        if original_format:
+            trade.moveset = 0
+            rom.seek(1, os.SEEK_CUR)
+        else:
+            trade.abilityNum = struct.unpack("<B", rom.read(1))[0]
 
         return trade
 
@@ -57,6 +66,7 @@ def main():
     argparser.add_argument("--rom", required=True)
     argparser.add_argument("--pointer", dest="sInGameTradesPtr", required=True)
     argparser.add_argument("--num-trades", dest="NUM_INGAME_TRADES", required=True)
+    argparser.add_argument("--modified-format", dest="original_format", action="store_false")
     argparser.add_argument("--output", required=True)
 
     args = argparser.parse_args()
@@ -75,7 +85,7 @@ def main():
     trades = []
 
     for i in range(NUM_INGAME_TRADES):
-        trades.append(InGameTrade.parse(rom))
+        trades.append(InGameTrade.parse(rom, original_format=args.original_format))
 
     with open(Path(__file__).parent / "templates/sInGameTrades", "r", encoding="UTF-8") as stream:
         fmt = stream.read()
