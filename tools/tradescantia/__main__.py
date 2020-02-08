@@ -3,12 +3,14 @@
 import sys, os, io, struct, argparse
 from pathlib import Path
 
+import encoding
+
 class InGameTrade():
     @staticmethod
     def parse(rom):
         trade = InGameTrade()
 
-        trade.nickname = arraystring(rom.read(11))
+        trade.nickname = f'_("{encoding.decode(rom.read(11))}")'
         trade.pokerus, trade.species = struct.unpack("<BH", rom.read(3))
         trade.ivs = arraystring(rom.read(6))
         trade.abilityNum = struct.unpack("<B", rom.read(1))[0]
@@ -17,7 +19,7 @@ class InGameTrade():
         trade.conditions = arraystring(rom.read(5))
         rom.seek(3, os.SEEK_CUR)
         trade.personality, trade.heldItem, trade.mailNum = struct.unpack("<IHB", rom.read(7))
-        trade.otName = arraystring(rom.read(11))
+        trade.otName = f'_("{encoding.decode(rom.read(11))}")'
         trade.otGender, trade.sheen, trade.requestedSpecies, trade.level = struct.unpack("<BBHB", rom.read(5))
         trade.moveset = 0
         rom.seek(1, os.SEEK_CUR)
@@ -25,7 +27,24 @@ class InGameTrade():
         return trade
 
     def __str__(self):
-        return self.fmt.format(self.nickname, self.pokerus, self.species, self.ivs, self.abilityNum, self.otId, self.conditions, self.personality, self.heldItem, self.mailNum, self.otName, self.otGender, self.sheen, self.requestedSpecies, self.level, self.moveset)
+        return self.fmt.format(
+            self.nickname,
+            f"0x{self.pokerus :X}",
+            f"0x{self.species :X}",
+            self.ivs,
+            self.abilityNum,
+            self.otId,
+            self.conditions,
+            f"0x{self.personality :X}",
+            f"0x{self.heldItem :X}",
+            self.mailNum,
+            self.otName,
+            "FEMALE" if self.otGender else "MALE",
+            self.sheen,
+            f"0x{self.requestedSpecies :X}",
+            self.level,
+            f"(u16*) 0x{self.moveset :08X}" if self.moveset else "NULL"
+        )
 
     with open(Path(__file__).parent / "templates/InGameTrade", "r", encoding="UTF-8") as stream:
         fmt = stream.read()

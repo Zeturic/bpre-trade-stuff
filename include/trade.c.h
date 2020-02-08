@@ -24,6 +24,8 @@ struct InGameTrade {
     /*0x3B*/ u8 abilityNum;
 };
 
+_Static_assert(sizeof(struct InGameTrade) == 0x3C, "sizeof(struct InGameTrade)");
+
 #ifndef SKIP_DECLARE_SINGAMETRADES
 
 // extern const struct InGameTrade sInGameTrades[];

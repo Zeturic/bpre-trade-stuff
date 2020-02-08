@@ -7,3 +7,6 @@
 #define NUM_STATS 6
 #define CONTEST_CATEGORIES_COUNT  5
 #define MAX_MON_MOVES 4
+
+#define MALE   0
+#define FEMALE 1
