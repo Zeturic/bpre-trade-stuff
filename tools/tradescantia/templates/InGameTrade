@@ -15,4 +15,5 @@
         .requestedSpecies = {},
         .level = {},
         .moveset = {},
+        .ppBonuses = {},
     }},

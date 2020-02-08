@@ -10,7 +10,7 @@ struct InGameTrade {
     /*0x14*/ u16 *moveset;
     /*0x18*/ u32 otId;
     /*0x1C*/ u8 conditions[CONTEST_CATEGORIES_COUNT];
-    /*0x21*/ u8 pad_21;
+    /*0x21*/ u8 ppBonuses;
     /*0x22*/ u8 pad_22;
     /*0x23*/ u8 pad_23;
     /*0x24*/ u32 personality;

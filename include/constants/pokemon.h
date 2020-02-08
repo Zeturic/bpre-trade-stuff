@@ -5,6 +5,7 @@
 #define MON_DATA_HELD_ITEM         12
 #define MON_DATA_MOVE1             13
 #define MON_DATA_PP1               17
+#define MON_DATA_PP_BONUSES        21
 #define MON_DATA_COOL              22
 #define MON_DATA_BEAUTY            23
 #define MON_DATA_CUTE              24

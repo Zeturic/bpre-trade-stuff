@@ -23,12 +23,8 @@ struct BattleMove
 extern struct Pokemon gPlayerParty[];
 extern struct Pokemon gEnemyParty[];
 
-// extern const struct BattleMove gBattleMoves[];
-typedef const struct BattleMove gBattleMovesType[];
-extern const gBattleMovesType * const gBattleMovesPtr;
-#define gBattleMoves (*gBattleMovesPtr)
-
 void CalculateMonStats(struct Pokemon *mon);
 u32 GetMonData(struct Pokemon *mon, s32 field);
 void SetMonData(struct Pokemon *mon, s32 field, const void *dataArg);
 void CreateMon(struct Pokemon *mon, u16 species, u8 level, u8 fixedIV, u8 hasFixedPersonality, u32 fixedPersonality, u8 otIdType, u32 fixedOtId);
+u8 CalculatePPWithBonus(u16 move, u8 ppBonuses, u8 moveIndex);

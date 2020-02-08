@@ -36,14 +36,24 @@ void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
     SetMonData(pokemon, MON_DATA_TOUGH, &inGameTrade->conditions[4]);
     SetMonData(pokemon, MON_DATA_SHEEN, &inGameTrade->sheen);
     SetMonData(pokemon, MON_DATA_POKERUS, &inGameTrade->pokerus);
+    SetMonData(pokemon, MON_DATA_PP_BONUSES, &inGameTrade->ppBonuses);
     SetMonData(pokemon, MON_DATA_MET_LOCATION, &metLocation);
 
-    if (inGameTrade->moveset)
-        for (u32 i = 0; i < MAX_MON_MOVES; ++i)
+    for (u8 i = 0; i < MAX_MON_MOVES; ++i)
+    {
+        u16 move;
+
+        if (inGameTrade->moveset != NULL)
         {
-            SetMonData(pokemon, MON_DATA_MOVE1 + i, &inGameTrade->moveset[i]);
-            SetMonData(pokemon, MON_DATA_PP1 + i, &gBattleMoves[inGameTrade->moveset[i]].pp);
+            move = inGameTrade->moveset[i];
+            SetMonData(pokemon, MON_DATA_MOVE1 + i, &move);
         }
+        else
+            move = GetMonData(pokemon, MON_DATA_MOVE1 + i);
+
+        u8 pp = CalculatePPWithBonus(move, inGameTrade->ppBonuses, i);
+        SetMonData(pokemon, MON_DATA_PP1 + i, &pp);
+    }
 
     isMail = FALSE;
     if (inGameTrade->heldItem != ITEM_NONE)
