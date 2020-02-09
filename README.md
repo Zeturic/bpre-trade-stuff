@@ -15,8 +15,8 @@ See [here](https://gist.github.com/Zeturic/db1611cc7b17c3140f9b9af32e1b596b) for
 Open your terminal to whatever folder you want to download this repo into. Then, do the following to download the repo:
 
 ```shell
-$ git clone https://github.com/Zeturic/bpre-in-game-trades.git
-$ cd bpre-in-game-trades
+$ git clone https://github.com/Zeturic/bpre-trade-stuff.git
+$ cd bpre-trade-stuff
 ```
 
 #### Adding your ROM
