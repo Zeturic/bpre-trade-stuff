@@ -34,7 +34,7 @@ The build system is smart enough to find enough free space on its own, but if yo
 
 Make sure to update `NUM_INGAME_TRADES` if you've repointed and expanded the table.
 
-`InGameStruct::abilityNum` had to be moved in order to make room for `InGameStruct::moveset`. If the data in your ROM is already in this format, make sure to set `ABILITYNUM_HAS_ALREADY_BEEN_MOVED` to `1`, otherwise keep it as `0`.
+`InGameTrade::abilityNum` had to be moved in order to make room for `InGameStruct::moveset`. If the data in your ROM is already in this format, make sure to set `ABILITYNUM_HAS_ALREADY_BEEN_MOVED` to `1`, otherwise keep it as `0`.
 
 If you've previously inserted this hack and just want to update the data without reinserting another copy of the code, you can set `INSERT_INGAME_TRADE_HACK` to `0`. Otherwise, keep it as `1`.
 
