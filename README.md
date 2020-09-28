@@ -10,14 +10,13 @@ For binary FR.
 
 See [here](https://gist.github.com/Zeturic/db1611cc7b17c3140f9b9af32e1b596b) for the prequisites and help in installing them.
 
-#### Cloning the repo and building the tools
+#### Cloning the repo
 
 Open your terminal to whatever folder you want to download this repo into. Then, do the following to download the repo:
 
 ```shell
 $ git clone https://github.com/Zeturic/bpre-trade-stuff.git
 $ cd bpre-trade-stuff
-$ ./build_tools.sh
 ```
 
 #### Adding your ROM
