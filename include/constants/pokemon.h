@@ -27,3 +27,5 @@
 #define MON_DATA_MAIL              64
 
 #define OT_ID_PRESET          1
+
+#define USE_RANDOM_IVS              32

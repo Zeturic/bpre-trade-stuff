@@ -53,6 +53,8 @@ Most of the fields in the `InGameTrade` struct should be self-explanatory, but I
 
 If `level` is set to `0`, the Pokémon's level will match the level of the Pokémon the player traded away. Otherwise, its level will be set to match the `level` field.
 
+The `ivs` are listed in the following order: HP, Attack, Defense, Speed, Special Attack, Special Defense. If any of them are set to `0xFF`, that particular IV will be randomly generated. Otherwise, that IV will match the provided value.
+
 An explanation of the `ppBonuses` byte can be found [here](https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9mon_data_substructures_in_Generation_III#PP_bonuses).
 
 An explanation of the `pokerus` byte can be found [here](https://bulbapedia.bulbagarden.net/wiki/Pok%C3%A9rus#Technical_information).
