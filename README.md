@@ -1,8 +1,8 @@
 ## In-Game Trades
 
-Adds a few more options for in-game trades. Specifically, the ability to set static levels, custom movesets, Pokérus, PP bonuses, and Poké Balls.
+Adds a few more options for in-game trades.
 
-Can also be used as a trade editor.
+Can also be used as sort of a trade editor to manage the new options.
 
 For binary FR.
 
@@ -33,7 +33,7 @@ The build system is smart enough to find enough free space on its own, but if yo
 
 Make sure to update `NUM_INGAME_TRADES` if you've repointed and expanded the table.
 
-`InGameTrade::abilityNum` had to be moved in order to make room for `InGameStruct::moveset`. If the data in your ROM is already in this format, make sure to set `ABILITYNUM_HAS_ALREADY_BEEN_MOVED` to `1`, otherwise keep it as `0`.
+`InGameTrade::abilityNum` had to be moved in order to make room for `InGameTrade::moveset`. If the data in your ROM is already in this format, make sure to set `ABILITYNUM_HAS_ALREADY_BEEN_MOVED` to `1`, otherwise keep it as `0`.
 
 If you've previously inserted this hack and just want to update the data without reinserting another copy of the code, you can set `INSERT_INGAME_TRADE_HACK` to `0`. Otherwise, keep it as `1`.
 
@@ -46,6 +46,20 @@ Keep in mind that you can't add in-game trades by adding more elements to the en
 #### Building the project itself
 
 Once you're ready, run `make`. This won't actually modify `rom.gba`, instead your output will be in `test.gba`. Naturally, test it in an emulator.
+
+### On Trade Editors
+
+The long and short of it is that this breaks trade editors. This is because it places new data in what used to be padding bytes, and trade editors could easily zero them out because they don't expect them to be meaningful or to need to be preserved.
+
+Even worse, as mentioned above, `InGameTrade::abilityNum` had to be moved, and obviously trade editors will be looking for it at the old location, which is now part of `InGameTrade::moveset`, and obviously that would confuse them.
+
+As a result, **do not use trade editors with this**.
+
+Obviously, this lets you modify your trades when you're inserting this hack via `src/sInGameTrades.c`, but what if you want to modify them later on, long after you've added this?
+
+This is why the options `INSERT_INGAME_TRADE_HACK` and `ABILITYNUM_HAS_ALREADY_BEEN_MOVED` exist in `config.mk`. They allow you to modify the data in your ROM by modifying `src/sInGameTrades.c` without reinserting the actual code, acting essentially as a text-based trade editor.
+
+Alternatively, you can edit your trades using a hex editor.
 
 ### Notes
 
