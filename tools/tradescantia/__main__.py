@@ -10,45 +10,56 @@ class InGameTrade():
     def parse(rom, *, original_format):
         trade = InGameTrade()
 
-        trade.nickname = f'_("{encoding.decode(rom.read(11))}")'
-        trade.pokerus, trade.species = struct.unpack("<BH", rom.read(3))
-        trade.ivs = arraystring(rom.read(6))
+        (
+            trade.nickname,
+            trade.pokerus,
+            trade.species,
+            trade.ivs,
+            maybe_moveset,
+            trade.otId,
+            trade.conditions,
+            trade.ppBonuses,
+            trade.ball,
+            _,
+            trade.personality,
+            trade.heldItem,
+            trade.mailNum,
+            trade.otName,
+            trade.otGender,
+            trade.sheen,
+            trade.requestedSpecies,
+            trade.level,
+            maybe_abilityNum,
+        ) = struct.unpack("11sBH6sII5sBBBIHB11sBBHBB", rom.read(60))
 
         if original_format:
-            trade.abilityNum = struct.unpack("<B", rom.read(1))[0]
-            rom.seek(3, os.SEEK_CUR)
-        else:
-            trade.moveset = struct.unpack("<I", rom.read(4))[0]
-
-        trade.otId = struct.unpack("<I", rom.read(4))[0]
-        trade.conditions = arraystring(rom.read(5))
-        trade.ppBonuses, trade.ball = struct.unpack("BB", rom.read(2))
-        rom.seek(1, os.SEEK_CUR)
-        trade.personality, trade.heldItem, trade.mailNum = struct.unpack("<IHB", rom.read(7))
-        trade.otName = f'_("{encoding.decode(rom.read(11))}")'
-        trade.otGender, trade.sheen, trade.requestedSpecies, trade.level = struct.unpack("<BBHB", rom.read(5))
-
-        if original_format:
+            trade.abilityNum = maybe_moveset & 0xFF
             trade.moveset = 0
-            rom.seek(1, os.SEEK_CUR)
         else:
-            trade.abilityNum = struct.unpack("<B", rom.read(1))[0]
+            trade.abilityNum = maybe_abilityNum
+            trade.moveset = maybe_moveset
+
+        trade.nickname = encoding.decode(trade.nickname)
+        trade.otName = encoding.decode(trade.otName)
+
+        trade.ivs = list(trade.ivs)
+        trade.conditions = list(trade.conditions)
 
         return trade
 
     def __str__(self):
         return self.fmt.format(
-            self.nickname,
+            f'_("{self.nickname}")',
             f"0x{self.pokerus :X}",
             f"0x{self.species :X}",
-            self.ivs,
+            arraystring(self.ivs),
             self.abilityNum,
             self.otId,
-            self.conditions,
+            arraystring(self.conditions),
             f"0x{self.personality :X}",
             f"0x{self.heldItem :X}",
             self.mailNum,
-            self.otName,
+            f'_("{self.otName}")',
             "FEMALE" if self.otGender else "MALE",
             self.sheen,
             f"0x{self.requestedSpecies :X}",
