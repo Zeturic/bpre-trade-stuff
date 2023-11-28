@@ -1,12 +1,12 @@
 #!/usr/bin/env python3
 
-import argparse
-import functools
-import io
-import pathlib
-import struct
+from argparse import ArgumentParser
+from functools import wraps, partial
+from io import BytesIO
+from pathlib import Path
+from struct import unpack
 
-import encoding
+from encoding import decode
 
 class InGameTrade():
     @staticmethod
@@ -33,7 +33,7 @@ class InGameTrade():
             trade.requestedSpecies,
             trade.level,
             maybe_abilityNum,
-        ) = struct.unpack("11sBH6sII5sBBBIHB11sBBHBB", data)
+        ) = unpack("11sBH6sII5sBBBIHB11sBBHBB", data)
 
         if original_format:
             trade.abilityNum = maybe_moveset & 0xFF
@@ -42,8 +42,8 @@ class InGameTrade():
             trade.abilityNum = maybe_abilityNum
             trade.moveset = maybe_moveset
 
-        trade.nickname = encoding.decode(trade.nickname)
-        trade.otName = encoding.decode(trade.otName)
+        trade.nickname = decode(trade.nickname)
+        trade.otName = decode(trade.otName)
 
         trade.ivs = list(trade.ivs)
         trade.conditions = list(trade.conditions)
@@ -88,22 +88,22 @@ class InGameTrade():
 
         yield "};"
 
-integer = functools.wraps(int)(functools.partial(int, base=0))
+integer = wraps(int)(partial(int, base=0))
 
 def main():
-    argparser = argparse.ArgumentParser(description='Rough automatic "decompilation" of sInGameTrades.')
-    argparser.add_argument("--rom", required=True, type=pathlib.Path)
+    argparser = ArgumentParser(description='Rough automatic "decompilation" of sInGameTrades.')
+    argparser.add_argument("--rom", required=True, type=Path)
     argparser.add_argument("--pointer", dest="sInGameTradesPtr", required=True, type=integer)
     argparser.add_argument("--num-trades", dest="NUM_INGAME_TRADES", required=True, type=integer)
     argparser.add_argument("--modified-format", dest="original_format", action="store_false")
-    argparser.add_argument("--output", required=True, type=pathlib.Path)
+    argparser.add_argument("--output", required=True, type=Path)
 
     args = argparser.parse_args()
 
-    rom = io.BytesIO(args.rom.read_bytes())
+    rom = BytesIO(args.rom.read_bytes())
 
     rom.seek(args.sInGameTradesPtr & 0x1FFFFFF)
-    sInGameTrades = struct.unpack("<I", rom.read(4))[0]
+    sInGameTrades = unpack("<I", rom.read(4))[0]
     rom.seek(sInGameTrades & 0x1FFFFFF)
 
     trades = (
