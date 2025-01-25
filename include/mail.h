@@ -1,5 +1,5 @@
 #pragma once
 
-extern struct MailStruct gTradeMail[];
+extern struct MailStruct gLinkPartnerMail[];
 
 bool8 ItemIsMail(u16 itemId);

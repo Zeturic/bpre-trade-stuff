@@ -7,7 +7,7 @@
 
 #if INSERT_INGAME_TRADE_HACK
 
-void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
+void CreateInGameTradePokemonInternal(u8 whichPlayerMon, u8 whichInGameTrade)
 {
     const struct InGameTrade *inGameTrade = &sInGameTrades[whichInGameTrade];
     u8 level = inGameTrade->level ? inGameTrade->level : GetMonData(&gPlayerParty[whichPlayerMon], MON_DATA_LEVEL);
@@ -63,8 +63,8 @@ void _CreateInGameTradePokemon(u8 whichPlayerMon, u8 whichInGameTrade)
     {
         if (ItemIsMail(inGameTrade->heldItem))
         {
-            SetInGameTradeMail(&mail, inGameTrade);
-            gTradeMail[0] = mail;
+            GetInGameTradeMail(&mail, inGameTrade);
+            gLinkPartnerMail[0] = mail;
             SetMonData(pokemon, MON_DATA_MAIL, &isMail);
             SetMonData(pokemon, MON_DATA_HELD_ITEM, &inGameTrade->heldItem);
         }

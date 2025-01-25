@@ -59,8 +59,10 @@ Temporary Items
 *.stackdump
 *.ss*
 *.exe
+*.md5
 
 build
 obj
 
+GNUmakefile
 src/sInGameTrades.c

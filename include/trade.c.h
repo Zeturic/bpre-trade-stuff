@@ -35,4 +35,4 @@ extern const sInGameTradesType * const sInGameTradesPtr;
 
 #endif
 
-void SetInGameTradeMail(struct MailStruct *mail, const struct InGameTrade *trade);
+void GetInGameTradeMail(struct MailStruct *mail, const struct InGameTrade *trade);

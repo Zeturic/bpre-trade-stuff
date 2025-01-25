@@ -16,7 +16,7 @@
 
 .org 0x08053B48
 .area 0x15A, 0xFE
-    ldr r3, =_CreateInGameTradePokemon |1
+    ldr r3, =CreateInGameTradePokemonInternal |1
     bx r3
     .pool
 .endarea
